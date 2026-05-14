@@ -5,12 +5,12 @@ export function SiteHeader() {
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-primary shadow-glow grid place-items-center font-display font-bold text-primary-foreground">
-            B
-          </div>
-          <span className="font-display text-lg font-semibold tracking-tight">
-            Binario
-          </span>
+          <img
+            src="/logo.png"
+            alt="Binário Tecnologia"
+            className="h-28 w-auto object-contain -my-6"
+            style={{ mixBlendMode: "screen" }}
+          />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#projetos" className="hover:text-foreground transition-colors">Projetos</a>

@@ -8,6 +8,7 @@ type Project = {
   icon: React.ComponentType<{ className?: string }>;
   className: string;
   accent: string;
+  previewImg?: string;
 };
 
 const projects: Project[] = [
@@ -15,29 +16,32 @@ const projects: Project[] = [
     title: "Requisição de Compras",
     description:
       "Plataforma completa para fluxo de aprovação de compras: solicitações, cotações, aprovações multinível e histórico auditável.",
-    href: "#",
+    href: "https://requisicao.catalogobinariotec.com.br/login",
     status: "Online",
     icon: ShoppingCart,
     className: "md:col-span-2 md:row-span-2",
     accent: "from-primary/40 to-accent/20",
+    previewImg: "/preview-req.jpeg",
   },
   {
     title: "Catálogo",
     description: "Vitrine digital de produtos com busca inteligente e categorias dinâmicas.",
-    href: "#",
+    href: "https://catalogobinariotec.com.br/",
     status: "Online",
     icon: Package,
     className: "md:col-span-2",
     accent: "from-accent/40 to-primary/20",
+    previewImg: "/preview-catalogo.jpeg",
   },
   {
     title: "RMA",
     description: "Gestão de devoluções e garantias ponta a ponta.",
-    href: "#",
+    href: "https://rma.binariotecnologia.com/",
     status: "Online",
     icon: RotateCcw,
     className: "",
     accent: "from-primary/30 to-accent/30",
+    previewImg: "/preview-rma.jpeg",
   },
   {
     title: "Chamados",
@@ -47,6 +51,7 @@ const projects: Project[] = [
     icon: Headphones,
     className: "",
     accent: "from-accent/30 to-primary/40",
+    previewImg: "/preview-chamados.jpeg",
   },
   {
     title: "Em desenvolvimento",
@@ -65,6 +70,26 @@ const statusStyles: Record<Project["status"], string> = {
   "Em desenvolvimento": "bg-muted text-muted-foreground border-border",
 };
 
+function BrowserPreview({ src, large }: { src: string; large?: boolean }) {
+  return (
+    <div className={`relative w-full rounded-xl overflow-hidden border border-white/10 bg-surface flex flex-col ${large ? "h-64" : "h-36"}`}>
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-black/30 border-b border-white/5 shrink-0">
+        <span className="w-2 h-2 rounded-full bg-red-500/70" />
+        <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
+        <span className="w-2 h-2 rounded-full bg-green-500/70" />
+      </div>
+      <div className="flex-1 relative overflow-hidden">
+        <img
+          src={src}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-top"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function ProjectsBento() {
   return (
     <section id="projetos" className="py-32 relative">
@@ -81,21 +106,25 @@ export function ProjectsBento() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[220px] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[340px] gap-4">
           {projects.map((p) => {
             const Icon = p.icon;
+            const isLarge = p.className.includes("row-span-2");
             return (
               <a
                 key={p.title}
                 href={p.href}
-                className={`group relative overflow-hidden rounded-2xl border border-border bg-gradient-card p-6 hover:border-primary/50 transition-all hover:shadow-glow ${p.className}`}
+                target={p.href.startsWith("http") ? "_blank" : undefined}
+                rel={p.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className={`group relative overflow-hidden rounded-2xl border border-border bg-gradient-card p-5 hover:border-primary/50 transition-all hover:shadow-glow ${p.className}`}
               >
                 <div
-                  className={`absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl opacity-50 bg-gradient-to-br ${p.accent} group-hover:opacity-80 transition-opacity`}
+                  className={`absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl opacity-40 bg-gradient-to-br ${p.accent} group-hover:opacity-70 transition-opacity`}
                 />
-                <div className="relative h-full flex flex-col justify-between">
+                <div className="relative h-full flex flex-col gap-3">
+                  {/* cabeçalho */}
                   <div className="flex items-start justify-between">
-                    <div className="w-11 h-11 rounded-xl glass grid place-items-center">
+                    <div className="w-10 h-10 rounded-xl glass grid place-items-center shrink-0">
                       <Icon className="w-5 h-5 text-foreground" />
                     </div>
                     <span
@@ -104,12 +133,19 @@ export function ProjectsBento() {
                       {p.status}
                     </span>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-display text-xl font-semibold">{p.title}</h3>
-                      <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+
+                  {/* preview do site */}
+                  {p.previewImg && (
+                    <BrowserPreview src={p.previewImg} large={isLarge} />
+                  )}
+
+                  {/* título e descrição */}
+                  <div className="mt-auto">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-display text-lg font-semibold">{p.title}</h3>
+                      <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform shrink-0" />
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
                       {p.description}
                     </p>
                   </div>
