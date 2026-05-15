@@ -1,4 +1,4 @@
-import { ArrowUpRight, ShoppingCart, Package, RotateCcw, Headphones, Sparkles } from "lucide-react";
+import { ArrowUpRight, ShoppingCart, Package, RotateCcw, Headphones, Truck } from "lucide-react";
 
 type Project = {
   title: string;
@@ -54,11 +54,11 @@ const projects: Project[] = [
     previewImg: "/preview-chamados.jpeg",
   },
   {
-    title: "Em desenvolvimento",
-    description: "Novos sistemas chegando — automação, BI e integrações entre os módulos.",
+    title: "Rastreamento de Cargas",
+    description: "Sistema de rastreamento de cargas em tempo real — acompanhamento de entregas, status de pedidos e histórico logístico.",
     href: "#contato",
     status: "Em desenvolvimento",
-    icon: Sparkles,
+    icon: Truck,
     className: "md:col-span-2",
     accent: "from-primary/20 to-accent/40",
   },
